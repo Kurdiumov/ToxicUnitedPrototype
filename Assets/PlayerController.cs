@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
         Blocked,
     };
 
+    public Transform LookTarget;
+
     MovingModes moveMode;
     //Interaction
     public float interactDistance = 3.0f;
@@ -225,6 +227,8 @@ public class PlayerController : MonoBehaviour
             this.playerView = cam.transform.localPosition;
             //Debug.Log(playerView);
             cam.transform.localPosition = this.roomView;
+            cam.transform.LookAt(LookTarget, Vector3.up);
+
             moveVector = Vector3.zero;
 
             Cursor.visible = true;
