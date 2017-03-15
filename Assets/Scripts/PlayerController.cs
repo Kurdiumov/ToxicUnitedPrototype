@@ -22,7 +22,14 @@ public class PlayerController : MonoBehaviour
     private float _rotationY;
 
     private List<GameObject> StrategyViewUIList;
-    
+
+
+
+    public float speed = 6.0F;
+    public float jumpSpeed = 8.0F;
+    public float gravity = 20.0F;
+    private Vector3 moveDirection = Vector3.zero;
+    private CharacterController playerController;
     void Start()
     {
         moveMode = MovingModes.FirstPerson;
@@ -30,7 +37,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StrategyViewUIList = new List<GameObject>();
-
+        playerController =  GetComponent<CharacterController>();
         foreach (var gameObject in GameObject.FindGameObjectsWithTag("StrategyView"))
         {
             StrategyViewUIList.Add(gameObject);
@@ -40,15 +47,35 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
+
+
         if (moveMode == MovingModes.FirstPerson)
         {
             CameraControl();
+            PlayerMove();
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SwitchControl();
         }
+    }
+
+    void PlayerMove()
+    {
+        if (playerController.isGrounded)
+        {
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection *= speed;
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
+
+        }
+        moveDirection.y -= gravity * Time.deltaTime;
+        playerController.Move(moveDirection * Time.deltaTime);
     }
 
     void CameraControl()
