@@ -5,45 +5,29 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
-    enum MovingModes
+    public enum MovingModes
     {
-        Player,
-        Strategic,
+        FirstPerson,
+        Strategic
     };
 
     public Transform LookTarget;
+    public MovingModes moveMode;
 
-    MovingModes moveMode;
-
-    //Interaction
-    public float interactDistance = 3.0f;
-
-    // Control:
-    public float speed = 6.0F;
-    public float sprintSpeed = 12.0f;
-    public float jumpSpeed = 8.0F;
-    public float gravity = 20.0F;
-
-    //   Camera:
-    public float mouseSensitivity = 100.0f;
-    private float rotationX;
-    private float rotationY;
+    //Camera:
     public Camera FirstPersonCamera;
     public Camera StrategicCamera;
+    private readonly float mouseSensitivity = 100.0f;
+    private float _rotationX;
+    private float _rotationY;
 
-    //public Camera minimapCam;
-    public float viewRange = 20.0f;
-    public Vector3 roomView = new Vector3(0.0f, 90.0f, -6.0f);
-    
-    public RaycastHit Ceiling { get; private set; }
-    public RaycastHit HitItem { get; private set; }
     private List<GameObject> StrategyViewUIList;
     
     void Start()
     {
+        moveMode = MovingModes.FirstPerson;
         StrategicCamera.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
-        moveMode = MovingModes.Player;
         Cursor.visible = false;
         StrategyViewUIList = new List<GameObject>();
 
@@ -56,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (moveMode == MovingModes.Player)
+        if (moveMode == MovingModes.FirstPerson)
         {
             CameraControl();
         }
@@ -69,40 +53,37 @@ public class PlayerController : MonoBehaviour
 
     void CameraControl()
     {
-        float mouseX;
-        float mouseY;
-
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = -Input.GetAxis("Mouse Y");
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = -Input.GetAxis("Mouse Y");
 
         if (moveMode != MovingModes.Strategic)
         {
-            rotationX += mouseX * mouseSensitivity * Time.deltaTime;
-            rotationY += mouseY * mouseSensitivity * Time.deltaTime;
+            _rotationX += mouseX * mouseSensitivity * Time.deltaTime;
+            _rotationY += mouseY * mouseSensitivity * Time.deltaTime;
         }
 
         //First Person
-        if (moveMode == MovingModes.Player)
+        if (moveMode == MovingModes.FirstPerson)
         {
-            if (rotationY > 80)
+            if (_rotationY > 80)
             {
-                rotationY = 80;
+                _rotationY = 80;
             }
-            else if (rotationY < -80)
+            else if (_rotationY < -80)
             {
-                rotationY = -80;
+                _rotationY = -80;
             }
 
-            Quaternion rotatePlayer = Quaternion.Euler(0.0f, rotationX, 0.0f);
-            
+            Quaternion rotatePlayer = Quaternion.Euler(0.0f, _rotationX, 0.0f);
             transform.rotation = rotatePlayer;
         }
     }
 
     void SwitchControl()
     {
-        if (moveMode == MovingModes.Player)
+        if (moveMode == MovingModes.FirstPerson)
         {
+            //Switch to Strategic view
             foreach (var gameObject in StrategyViewUIList)
                 gameObject.SetActive(true);
             ToggleCamera();
@@ -112,35 +93,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //Switch to Firs Person view
             foreach (var gameObject in StrategyViewUIList)
                 gameObject.SetActive(false);
             ToggleCamera();
-            moveMode = MovingModes.Player;
+            moveMode = MovingModes.FirstPerson;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
-    }
-
-    void ToggleCursor()
-    {
-        if (Input.GetButtonDown("Fire2") && Cursor.visible == false)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else if (Input.GetButtonDown("Fire2") && Cursor.visible == true)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-    }
-
-    private IEnumerator TurnOffCam()
-    {
-        GetComponent<Camera>().enabled = false;
-        yield return new WaitForSeconds(1.0f);
-        GetComponent<Camera>().enabled = true;
-        yield return 0;
     }
 
     private void ToggleCamera()
