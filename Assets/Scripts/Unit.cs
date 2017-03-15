@@ -6,11 +6,13 @@ public class Unit : MonoBehaviour {
     public int Type;
 
     public string Name;
-    public Sprite Image;
+    public Texture2D Image;
     public int Health;
     public int Attack;
     public int AttackRange;
     public int AttackSpeed;
+
+    //public GameObject prefab;
 
     private void Start() {
 
