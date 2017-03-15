@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public class PlayerController : MonoBehaviour
     {
         Player,
         Strategic,
-        Blocked,
     };
 
     public Transform LookTarget;
@@ -22,27 +22,29 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeed = 12.0f;
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
-    
+
     //   Camera:
     public float mouseSensitivity = 100.0f;
     private float rotationX;
     private float rotationY;
-    public Camera camera;
- 
+    public Camera FirstPersonCamera;
+    public Camera StrategicCamera;
+
     //public Camera minimapCam;
     public float viewRange = 20.0f;
     public Vector3 roomView = new Vector3(0.0f, 90.0f, -6.0f);
-    Vector3 playerView = new Vector3(0.0f, 0.5f, 0.0f);
-
+    
     public RaycastHit Ceiling { get; private set; }
     public RaycastHit HitItem { get; private set; }
 
     void Start()
     {
+        StrategicCamera.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         moveMode = MovingModes.Player;
         Cursor.visible = false;
     }
+
     void Update()
     {
         if (moveMode == MovingModes.Player)
@@ -54,11 +56,6 @@ public class PlayerController : MonoBehaviour
         {
             SwitchControl();
         }
-    }
-
-    void RoomMove()
-    {
-
     }
 
     void CameraControl()
@@ -88,10 +85,8 @@ public class PlayerController : MonoBehaviour
             }
 
             Quaternion rotatePlayer = Quaternion.Euler(0.0f, rotationX, 0.0f);
-            Quaternion rotateCam = Quaternion.Euler(rotationY, rotationX, 0.0f);
-
+            
             transform.rotation = rotatePlayer;
-            camera.transform.rotation = rotateCam;
         }
     }
 
@@ -99,20 +94,15 @@ public class PlayerController : MonoBehaviour
     {
         if (moveMode == MovingModes.Player)
         {
+            ToggleCamera();
             moveMode = MovingModes.Strategic;
-            this.playerView = camera.transform.localPosition;
-            camera.transform.localPosition = this.roomView;
-            camera.transform.LookAt(LookTarget, Vector3.up);
-
-            
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
         else
         {
+            ToggleCamera();
             moveMode = MovingModes.Player;
-            camera.transform.localPosition = this.playerView;
-
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -134,9 +124,36 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator TurnOffCam()
     {
-        camera.enabled = false;
+        GetComponent<Camera>().enabled = false;
         yield return new WaitForSeconds(1.0f);
-        camera.enabled = true;
+        GetComponent<Camera>().enabled = true;
         yield return 0;
+    }
+
+    private void ToggleCamera()
+    {
+        if (StrategicCamera.enabled)
+        {
+            StrategicCamera.enabled = false;
+            FirstPersonCamera.enabled = true;
+        }
+        else if (FirstPersonCamera.enabled)
+        {
+            StrategicCamera.enabled = true;
+            FirstPersonCamera.enabled = false;
+        }
+        else
+        {
+            throw new ArgumentException();
+        }
+    }
+
+    private Camera GetActiveCamera()
+    {
+        if (StrategicCamera.enabled)
+            return StrategicCamera;
+        if (FirstPersonCamera.enabled)
+            return FirstPersonCamera;
+        return null;
     }
 }
