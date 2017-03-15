@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,13 +37,21 @@ public class PlayerController : MonoBehaviour
     
     public RaycastHit Ceiling { get; private set; }
     public RaycastHit HitItem { get; private set; }
-
+    private List<GameObject> StrategyViewUIList;
+    
     void Start()
     {
         StrategicCamera.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         moveMode = MovingModes.Player;
         Cursor.visible = false;
+        StrategyViewUIList = new List<GameObject>();
+
+        foreach (var gameObject in GameObject.FindGameObjectsWithTag("StrategyView"))
+        {
+            StrategyViewUIList.Add(gameObject);
+            gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -94,6 +103,8 @@ public class PlayerController : MonoBehaviour
     {
         if (moveMode == MovingModes.Player)
         {
+            foreach (var gameObject in StrategyViewUIList)
+                gameObject.SetActive(true);
             ToggleCamera();
             moveMode = MovingModes.Strategic;
             Cursor.visible = true;
@@ -101,6 +112,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            foreach (var gameObject in StrategyViewUIList)
+                gameObject.SetActive(false);
             ToggleCamera();
             moveMode = MovingModes.Player;
             Cursor.visible = false;
