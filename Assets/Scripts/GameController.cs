@@ -9,13 +9,17 @@ public class GameController : MonoBehaviour {
 
     public GameObject UnitPanelTemplate;
 
-    private List<Unit> AvailableUnits;
+    private List<GameObject> AvailableUnits;
 
 	// Use this for initialization
 	void Start () {
-        AvailableUnits = new List<Unit>();
+        // Init empty unit array
+        AvailableUnits = new List<GameObject>();
+
+        // Load units:
         addUnit("TestUnit");
-        
+        addUnit("TestUnit");
+        addUnit("TestUnit");
     }
 
     //Add unit by passing it's prefab
@@ -35,6 +39,19 @@ public class GameController : MonoBehaviour {
 
         // Instantiate mutated prefab
         Instantiate(UnitPanelTemplate, UnitArrayPool.transform);
+
+        AvailableUnits.Add(unitPrefab);
+    }
+
+    public GameObject getPrefabOfUnit(int position) {
+        return AvailableUnits[position];
+    }
+
+    public void removeUnit(int position) {
+        // Remove from array
+        AvailableUnits.RemoveAt(position);
+        // and delete GameObject (unit image in panel)
+        Destroy(UnitArrayPool.transform.GetChild(position).gameObject);
     }
 	
 	// Update is called once per frame

@@ -12,6 +12,8 @@ public class Unit : MonoBehaviour {
     public int AttackRange;
     public int AttackSpeed;
 
+    public bool isActive = false;
+
     //public GameObject prefab;
 
     private void Start() {
@@ -19,6 +21,11 @@ public class Unit : MonoBehaviour {
     }
 
     private void Update() {
+        if (isActive)
+            moveUnit();
+    }
 
+    private void moveUnit() {
+        this.transform.Translate(Vector3.forward * Time.deltaTime * 10);
     }
 }
