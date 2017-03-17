@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,7 +28,9 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
     private Vector3 moveDirection = Vector3.zero;
-    private CharacterController playerController;
+    private CharacterController charakterController;
+    private PlayerController playerController;
+
     void Start()
     {
         moveMode = MovingModes.FirstPerson;
@@ -37,20 +38,17 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StrategyViewUIList = new List<GameObject>();
-        playerController =  GetComponent<CharacterController>();
-        foreach (var gameObject in GameObject.FindGameObjectsWithTag("StrategyView"))
+        charakterController = gameObject.GetComponent<CharacterController>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        foreach (var gameObj in GameObject.FindGameObjectsWithTag("StrategyView"))
         {
-            StrategyViewUIList.Add(gameObject);
-            gameObject.SetActive(false);
+            StrategyViewUIList.Add(gameObj);
+            gameObj.SetActive(false);
         }
     }
 
     void Update()
     {
-
-
-
-
         if (moveMode == MovingModes.FirstPerson)
         {
             CameraControl();
@@ -65,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
-        if (playerController.isGrounded)
+        if (charakterController.isGrounded)
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
@@ -75,7 +73,24 @@ public class PlayerController : MonoBehaviour
 
         }
         moveDirection.y -= gravity * Time.deltaTime;
-        playerController.Move(moveDirection * Time.deltaTime);
+        charakterController.Move(moveDirection * Time.deltaTime);
+
+        playerController.speed = 6;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            playerController.speed = 10;
+        }
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            charakterController.height = 1;
+            playerController.speed = 1;
+
+        }
+        else if (charakterController.height < 2)
+        {
+            charakterController.height += 0.05f;
+        }
     }
 
     void CameraControl()
