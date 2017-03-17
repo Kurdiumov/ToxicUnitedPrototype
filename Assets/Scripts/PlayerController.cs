@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,13 +17,14 @@ public class PlayerController : MonoBehaviour
     //Camera:
     public Camera FirstPersonCamera;
     public Camera StrategicCamera;
+    public Camera SniperCamera;
     private readonly float mouseSensitivity = 100.0f;
     private float _rotationX;
     private float _rotationY;
 
     private List<GameObject> StrategyViewUIList;
 
-
+    private AudioSource sniperShootSound;
 
     public float speed = 6.0F;
     public float jumpSpeed = 8.0F;
@@ -30,16 +32,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController charakterController;
     private PlayerController playerController;
+    private Canvas SniperSightCanvas;
 
     void Start()
     {
+        
         moveMode = MovingModes.FirstPerson;
         StrategicCamera.enabled = false;
+        SniperCamera.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StrategyViewUIList = new List<GameObject>();
         charakterController = gameObject.GetComponent<CharacterController>();
         playerController = gameObject.GetComponent<PlayerController>();
+        sniperShootSound = gameObject.GetComponent<AudioSource>();
+        SniperSightCanvas = transform.Find("SniperSightCanvas").gameObject.GetComponent<Canvas>();
+        SniperSightCanvas.enabled = false;
+        
         foreach (var gameObj in GameObject.FindGameObjectsWithTag("StrategyView"))
         {
             StrategyViewUIList.Add(gameObj);
@@ -49,8 +58,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         if (moveMode == MovingModes.FirstPerson)
         {
+            SniperSightCanvas.enabled = false;
+            if (Input.GetButtonDown("Fire1") && Input.GetMouseButton(1))
+            {
+                SniperSightCanvas.enabled = true;
+                if (GetActiveCamera() == SniperCamera)
+                    Shoot();
+            }
+            if (Input.GetMouseButton(1))
+            {
+                SniperSightCanvas.enabled = true;
+                ToggleCamera(SniperCamera);
+            }
+            else
+            {
+                ToggleCamera(FirstPersonCamera);
+            }
+            
             CameraControl();
             PlayerMove();
         }
@@ -116,7 +143,7 @@ public class PlayerController : MonoBehaviour
                 _rotationY = -80;
             }
 
-            Quaternion rotatePlayer = Quaternion.Euler(0.0f, _rotationX, 0.0f);
+            Quaternion rotatePlayer = Quaternion.Euler(_rotationY, _rotationX, 0.0f);
             transform.rotation = rotatePlayer;
         }
     }
@@ -128,7 +155,7 @@ public class PlayerController : MonoBehaviour
             //Switch to Strategic view
             foreach (var gameObject in StrategyViewUIList)
                 gameObject.SetActive(true);
-            ToggleCamera();
+            ToggleCamera(StrategicCamera);
             moveMode = MovingModes.Strategic;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -138,30 +165,20 @@ public class PlayerController : MonoBehaviour
             //Switch to Firs Person view
             foreach (var gameObject in StrategyViewUIList)
                 gameObject.SetActive(false);
-            ToggleCamera();
+            ToggleCamera(FirstPersonCamera);
             moveMode = MovingModes.FirstPerson;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
-    private void ToggleCamera()
+    private void ToggleCamera(Camera camera)
     {
-        if (StrategicCamera.enabled)
-        {
-            StrategicCamera.enabled = false;
-            FirstPersonCamera.enabled = true;
-        }
-        else if (FirstPersonCamera.enabled)
-        {
-            StrategicCamera.enabled = true;
-            FirstPersonCamera.enabled = false;
-        }
-        else
-        {
-            throw new ArgumentException();
-        }
-    }
+        StrategicCamera.enabled = false;
+        FirstPersonCamera.enabled = false;
+        SniperCamera.enabled = false;
+        camera.enabled = true;
+   }
 
     private Camera GetActiveCamera()
     {
@@ -169,6 +186,14 @@ public class PlayerController : MonoBehaviour
             return StrategicCamera;
         if (FirstPersonCamera.enabled)
             return FirstPersonCamera;
+        if (SniperCamera.enabled)
+            return SniperCamera;
         return null;
+    }
+
+    private void Shoot()
+    {
+        sniperShootSound.PlayOneShot(sniperShootSound.clip);
+        Debug.Log("Shoot");
     }
 }
