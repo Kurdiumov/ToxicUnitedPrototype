@@ -534,7 +534,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f958b03daf0dd074a94bff7c43b9d1b2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 12c1bbaf603506c4fa68bcde8316c4ca, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -619,8 +619,10 @@ MonoBehaviour:
   SniperCamera: {fileID: 2080641203}
   Ammo: 5
   Attack: 30
+  TimeBetweenShoots: 3
   SniperShootSound: {fileID: 130074741}
   SniperOutOfAmmoSound: {fileID: 130074743}
+  KnockbackAmount: 5
 --- !u!82 &130074743
 AudioSource:
   m_ObjectHideFlags: 0
