@@ -8,8 +8,10 @@ public class SniperControl : MonoBehaviour
 {
     public Camera SniperCamera;
     public int Ammo;
+    public int Attack;
     public AudioSource SniperShootSound;
     public AudioSource SniperOutOfAmmoSound;
+
 
     private PlayerController _playerController;
     private Canvas _sniperSightCanvas;
@@ -59,6 +61,19 @@ public class SniperControl : MonoBehaviour
             Debug.Log("Shoot");
             this.Ammo--;
             ammoText.text = "Ammo: " + Ammo;
+
+            RaycastHit hitInfo = new RaycastHit();
+            if (Physics.Raycast(SniperCamera.ScreenPointToRay(Input.mousePosition), out hitInfo))
+            {
+                //TODO:
+                //For new attack insert code here
+                if (hitInfo.transform.name == "TestUnitObject")
+                {
+                    Unit unit = (Unit) hitInfo.transform.GetComponent<Unit>();
+                    unit.GetDamage(this.Attack);
+                    Debug.Log("Hit comrad unit. Unit Health now is: " + unit.Health);
+                }
+            }
         }
         else
         {

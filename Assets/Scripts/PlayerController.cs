@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
         switch (moveMode)
         {
             case Mode.FirstPerson:
-                sniperConrol.EnableText();
+                sniperConrol.EnableText();  
                 sniperConrol.Disable();
                 ToggleCamera(FirstPersonCamera);
                 //Switch to Firs Person view
