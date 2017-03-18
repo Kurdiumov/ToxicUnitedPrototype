@@ -25,7 +25,7 @@ public class SpawnUnit : MonoBehaviour {
         GameObject unitPrefab = gameController.getPrefabOfUnit(index);
 
         // Instantiate it at the midlane
-        GameObject clone = Instantiate(unitPrefab, new Vector3(0, 10, -230), Quaternion.identity);
+        GameObject clone = Instantiate(unitPrefab, new Vector3(0, 0, -230), Quaternion.identity);
 
         // Set clone as active
         clone.GetComponent<Unit>().isActive = true;
