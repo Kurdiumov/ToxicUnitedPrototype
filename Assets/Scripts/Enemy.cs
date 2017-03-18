@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Unit : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
     public int Type;
 
     public string Name;
@@ -19,18 +20,14 @@ public class Unit : MonoBehaviour {
 
     private void Start()
     {
-        this.Health = 100;
+
     }
 
-    private void Update() {
-        if (isActive)
-            moveUnit();
- 
+    private void Update()
+    {
+
     }
 
-    private void moveUnit() {
-        this.transform.Translate(Vector3.forward * Time.deltaTime * 10);
-    }
 
     public void GetDamage(int damage)
     {
@@ -39,5 +36,6 @@ public class Unit : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
     }
 }

@@ -22,12 +22,6 @@ public class SniperControl : MonoBehaviour
     private readonly float _mouseSensitivity = 30;
     private float _timeFromLastShoot;
 
-    
-    private Vector2 startingPosition;
-
-    private float randx = (Random.Range(-30, 30)) / 10f;
-    private float randy = (Random.Range(-30, 30)) / 10f;
-
     void Start()
     {
         _playerController = gameObject.GetComponent<PlayerController>();
@@ -74,7 +68,6 @@ public class SniperControl : MonoBehaviour
             this.Ammo--;
             ammoText.text = "Ammo: " + Ammo;
             _knockbackOffset = KnockbackAmount;
-            startingPosition = new Vector2(_playerController.RotationX, _playerController.RotationY);
 
             RaycastHit hitInfo = new RaycastHit();
             if (Physics.Raycast(SniperCamera.ScreenPointToRay(Input.mousePosition), out hitInfo))
@@ -86,6 +79,11 @@ public class SniperControl : MonoBehaviour
                     Unit unit = (Unit) hitInfo.transform.GetComponent<Unit>();
                     unit.GetDamage(this.Attack);
                     Debug.Log("Hit comrad unit. Unit Health now is: " + unit.Health);
+                } else if (hitInfo.transform.name == "Enemy")
+                {
+                    Enemy enemy = (Enemy)hitInfo.transform.GetComponent<Enemy>();
+                    enemy.GetDamage(this.Attack);
+                    Debug.Log("Hit Enemy unit. Unit Health now is: " + enemy.Health);
                 }
             }
         }
