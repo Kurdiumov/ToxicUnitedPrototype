@@ -18,10 +18,10 @@ public class PlayerController : MonoBehaviour
     //Camera:
     public Camera FirstPersonCamera;
     public Camera StrategicCamera;
-    
-    private float _mouseSensitivity = 100.0f;
-    private float _rotationX;
-    private float _rotationY;
+
+    private readonly  float _mouseSensitivity = 100.0f;
+    public float RotationX;
+    public float RotationY;
 
     private List<GameObject> StrategyViewUIList; 
 
@@ -118,19 +118,19 @@ public class PlayerController : MonoBehaviour
 
         if (moveMode == Mode.FirstPerson || moveMode == Mode.Sniper)
         {
-            _rotationX += mouseX * _mouseSensitivity * Time.deltaTime;
-            _rotationY += mouseY * _mouseSensitivity * Time.deltaTime;
+            RotationX += mouseX * _mouseSensitivity * Time.deltaTime;
+            RotationY += mouseY * _mouseSensitivity * Time.deltaTime;
 
-            if (_rotationY > 80)
+            if (RotationY > 80)
             {
-                _rotationY = 80;
+                RotationY = 80;
             }
-            else if (_rotationY < -80)
+            else if (RotationY < -80)
             {
-                _rotationY = -80;
+                RotationY = -80;
             }
 
-            Quaternion rotatePlayer = Quaternion.Euler(_rotationY, _rotationX, 0.0f);
+            Quaternion rotatePlayer = Quaternion.Euler(RotationY, RotationX, 0.0f);
             transform.rotation = rotatePlayer;
         }
     }
@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
         switch (moveMode)
         {
             case Mode.FirstPerson:
+                sniperConrol.EnableText();
                 sniperConrol.Disable();
                 ToggleCamera(FirstPersonCamera);
                 //Switch to Firs Person view
@@ -151,15 +152,15 @@ public class PlayerController : MonoBehaviour
                 moveMode = Mode.FirstPerson;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                this._mouseSensitivity = 100f;
                 break;
             case Mode.Sniper:
+                sniperConrol.EnableText();
                 sniperConrol.Enable();
                 ToggleCamera(sniperConrol.SniperCamera);
-                this._mouseSensitivity = 50f;
                 break;
             case Mode.Strategic:
                 sniperConrol.Disable();
+                sniperConrol.DisableText();
                 ToggleCamera(StrategicCamera);
                 foreach (var gameObject in StrategyViewUIList)
                     gameObject.SetActive(true);
