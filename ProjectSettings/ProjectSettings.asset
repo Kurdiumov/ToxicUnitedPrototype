@@ -461,10 +461,8 @@ PlayerSettings:
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
-  cloudServicesEnabled:
-    Collab: 1
-    UNet: 1
-  cloudProjectId: 5d53f8a1-b125-44f4-9cf2-b2f68cfe9aac
-  projectName: Towerdef
-  organizationId: zingler
+  cloudServicesEnabled: {}
+  cloudProjectId: 
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
