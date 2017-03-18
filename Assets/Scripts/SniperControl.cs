@@ -12,9 +12,13 @@ public class SniperControl : MonoBehaviour
     public int Attack;
     public int TimeBetweenShoots;
     public float KnockbackAmount;
+    public int ZoomScaleFactor;
+    public int MaxZoomScale;
+    public int MinZoomScale;
     public AudioSource SniperShootSound;
     public AudioSource SniperOutOfAmmoSound;
     
+
     private float _knockbackOffset;
     private PlayerController _playerController;
     private Canvas _sniperSightCanvas;
@@ -22,7 +26,7 @@ public class SniperControl : MonoBehaviour
     private Image _sniperImage;
     private readonly float _mouseSensitivity = 30;
     private float _timeFromLastShoot;
-
+    
     void Start()
     {
         _playerController = gameObject.GetComponent<PlayerController>();
@@ -47,6 +51,10 @@ public class SniperControl : MonoBehaviour
                 {
                     if (_timeFromLastShoot <= 0)
                         Shoot();
+                }
+                if (Input.GetAxis("Mouse ScrollWheel") != 0)
+                {
+                    SetScroll(Input.GetAxis("Mouse ScrollWheel"));
                 }
                 _playerController.PlayerMove();
                 CameraControl();
@@ -81,7 +89,7 @@ public class SniperControl : MonoBehaviour
                     unit.GetDamage(this.Attack);
                     Debug.Log("Hit comrad unit. Unit Health now is: " + unit.Health);
                 } 
-                else if (hitInfo.transform.gameObject.tag == "Enemy")
+                else if (hitInfo.transform.gameObject.tag == "Enemy" && hitInfo.collider == hitInfo.transform.gameObject.GetComponent<CapsuleCollider>())
                 {
                     Enemy enemy = (Enemy)hitInfo.transform.GetComponent<Enemy>();
                     enemy.GetDamage(this.Attack);
@@ -127,8 +135,8 @@ public class SniperControl : MonoBehaviour
         if (PlayerController.moveMode == PlayerController.Mode.FirstPerson ||
             PlayerController.moveMode == PlayerController.Mode.Sniper)
         {
-            _playerController.RotationX += mouseX * _mouseSensitivity * Time.deltaTime;
-            _playerController.RotationY += mouseY * _mouseSensitivity * Time.deltaTime;
+            _playerController.RotationX += mouseX * GetSensetiity() * Time.deltaTime;
+            _playerController.RotationY += mouseY * GetSensetiity() * Time.deltaTime;
 
 
             //knockback when shooting
@@ -153,5 +161,35 @@ public class SniperControl : MonoBehaviour
             Quaternion rotatePlayer = Quaternion.Euler(_playerController.RotationY, _playerController.RotationX, 0.0f);
             transform.rotation = rotatePlayer;
         }
+    }
+
+    private void SetScroll(float direction)
+    {
+
+        if (direction < 0)
+        {
+            if (SniperCamera.fieldOfView < MaxZoomScale)
+               SniperCamera.fieldOfView += ZoomScaleFactor;
+        }
+        else
+        {
+            if (SniperCamera.fieldOfView > MinZoomScale)
+                SniperCamera.fieldOfView -= ZoomScaleFactor;
+        }
+    }
+
+    private float GetSensetiity()
+    {
+        int i = MinZoomScale;
+        int j = ZoomScaleFactor-1;
+        for (; i < SniperCamera.fieldOfView; i += 4, j++) ;
+            return j + i;
+
+        //2   -> 5
+        //6   -> 10
+        //10  -> 15
+        //14  -> 20 
+        //18  -> 25
+        //22  -> 30
     }
 }
