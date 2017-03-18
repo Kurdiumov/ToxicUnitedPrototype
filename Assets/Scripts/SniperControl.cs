@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -79,7 +80,8 @@ public class SniperControl : MonoBehaviour
                     Unit unit = (Unit) hitInfo.transform.GetComponent<Unit>();
                     unit.GetDamage(this.Attack);
                     Debug.Log("Hit comrad unit. Unit Health now is: " + unit.Health);
-                } else if (hitInfo.transform.name == "Enemy")
+                } 
+                else if (hitInfo.transform.gameObject.tag == "Enemy")
                 {
                     Enemy enemy = (Enemy)hitInfo.transform.GetComponent<Enemy>();
                     enemy.GetDamage(this.Attack);
