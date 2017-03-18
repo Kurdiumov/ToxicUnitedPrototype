@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 130074738}
   - component: {fileID: 130074739}
   - component: {fileID: 130074741}
+  - component: {fileID: 130074742}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -481,10 +482,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookTarget: {fileID: 1618028999}
-  moveMode: 0
   FirstPersonCamera: {fileID: 2106097596}
   StrategicCamera: {fileID: 1263555618}
-  SniperCamera: {fileID: 2080641203}
   speed: 6
   jumpSpeed: 8
   gravity: 20
@@ -603,6 +602,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &130074742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 130074737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6755f03b797ea204fa020c4bb7ad7cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SniperCamera: {fileID: 2080641203}
 --- !u!1 &131020022
 GameObject:
   m_ObjectHideFlags: 0
@@ -6410,7 +6421,7 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2080641202}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}

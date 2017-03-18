@@ -5,50 +5,47 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum MovingModes
+    public enum Mode
     {
         FirstPerson,
-        Strategic
+        Strategic,
+        Sniper
     };
 
     public Transform LookTarget;
-    public MovingModes moveMode;
+    public static Mode moveMode =  Mode.FirstPerson;
 
     //Camera:
     public Camera FirstPersonCamera;
     public Camera StrategicCamera;
-    public Camera SniperCamera;
-    private readonly float mouseSensitivity = 100.0f;
+    
+    private float _mouseSensitivity = 100.0f;
     private float _rotationX;
     private float _rotationY;
 
-    private List<GameObject> StrategyViewUIList;
-
-    private AudioSource sniperShootSound;
+    private List<GameObject> StrategyViewUIList; 
 
     public float speed = 6.0F;
     public float jumpSpeed = 8.0F;
     public float gravity = 20.0F;
+
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController charakterController;
     private PlayerController playerController;
-    private Canvas SniperSightCanvas;
+    private SniperControl sniperConrol;
 
     void Start()
     {
-        
-        moveMode = MovingModes.FirstPerson;
-        StrategicCamera.enabled = false;
-        SniperCamera.enabled = false;
+        moveMode = Mode.FirstPerson;
+        StrategicCamera.enabled = false;      
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StrategyViewUIList = new List<GameObject>();
         charakterController = gameObject.GetComponent<CharacterController>();
         playerController = gameObject.GetComponent<PlayerController>();
-        sniperShootSound = gameObject.GetComponent<AudioSource>();
-        SniperSightCanvas = transform.Find("SniperSightCanvas").gameObject.GetComponent<Canvas>();
-        SniperSightCanvas.enabled = false;
-        
+        sniperConrol = gameObject.GetComponent<SniperControl>();
+
+
         foreach (var gameObj in GameObject.FindGameObjectsWithTag("StrategyView"))
         {
             StrategyViewUIList.Add(gameObj);
@@ -58,37 +55,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
-        if (moveMode == MovingModes.FirstPerson)
+        switch (moveMode)
         {
-            SniperSightCanvas.enabled = false;
-            if (Input.GetButtonDown("Fire1") && Input.GetMouseButton(1))
-            {
-                SniperSightCanvas.enabled = true;
-                if (GetActiveCamera() == SniperCamera)
-                    Shoot();
-            }
-            if (Input.GetMouseButton(1))
-            {
-                SniperSightCanvas.enabled = true;
-                ToggleCamera(SniperCamera);
-            }
-            else
-            {
-                ToggleCamera(FirstPersonCamera);
-            }
-            
-            CameraControl();
-            PlayerMove();
+            case Mode.FirstPerson:
+                if (Input.GetMouseButton(1))
+                {
+                    SwitchControl(Mode.Sniper);
+                }
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    SwitchControl(Mode.Strategic);
+                }
+                CameraControl();
+                PlayerMove();
+                break;
+            case Mode.Strategic:
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    SwitchControl(Mode.FirstPerson);
+                }
+                break;
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            SwitchControl();
-        }
     }
 
-    void PlayerMove()
+    public void PlayerMove()
     {
         if (charakterController.isGrounded)
         {
@@ -120,20 +111,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void CameraControl()
+    public void CameraControl()
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = -Input.GetAxis("Mouse Y");
 
-        if (moveMode != MovingModes.Strategic)
+        if (moveMode == Mode.FirstPerson || moveMode == Mode.Sniper)
         {
-            _rotationX += mouseX * mouseSensitivity * Time.deltaTime;
-            _rotationY += mouseY * mouseSensitivity * Time.deltaTime;
-        }
+            _rotationX += mouseX * _mouseSensitivity * Time.deltaTime;
+            _rotationY += mouseY * _mouseSensitivity * Time.deltaTime;
 
-        //First Person
-        if (moveMode == MovingModes.FirstPerson)
-        {
             if (_rotationY > 80)
             {
                 _rotationY = 80;
@@ -148,27 +135,39 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void SwitchControl()
+    public void SwitchControl(Mode mode)
     {
-        if (moveMode == MovingModes.FirstPerson)
+        moveMode = mode;
+
+        switch (moveMode)
         {
-            //Switch to Strategic view
-            foreach (var gameObject in StrategyViewUIList)
-                gameObject.SetActive(true);
-            ToggleCamera(StrategicCamera);
-            moveMode = MovingModes.Strategic;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            //Switch to Firs Person view
-            foreach (var gameObject in StrategyViewUIList)
-                gameObject.SetActive(false);
-            ToggleCamera(FirstPersonCamera);
-            moveMode = MovingModes.FirstPerson;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            case Mode.FirstPerson:
+                sniperConrol.Disable();
+                ToggleCamera(FirstPersonCamera);
+                //Switch to Firs Person view
+                foreach (var gameObject in StrategyViewUIList)
+                    gameObject.SetActive(false);
+
+                moveMode = Mode.FirstPerson;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                this._mouseSensitivity = 100f;
+                break;
+            case Mode.Sniper:
+                sniperConrol.Enable();
+                ToggleCamera(sniperConrol.SniperCamera);
+                this._mouseSensitivity = 50f;
+                break;
+            case Mode.Strategic:
+                sniperConrol.Disable();
+                ToggleCamera(StrategicCamera);
+                foreach (var gameObject in StrategyViewUIList)
+                    gameObject.SetActive(true);
+
+                moveMode = Mode.Strategic;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                break;
         }
     }
 
@@ -176,9 +175,9 @@ public class PlayerController : MonoBehaviour
     {
         StrategicCamera.enabled = false;
         FirstPersonCamera.enabled = false;
-        SniperCamera.enabled = false;
+        sniperConrol.SniperCamera.enabled = false;
         camera.enabled = true;
-   }
+    }
 
     private Camera GetActiveCamera()
     {
@@ -186,14 +185,9 @@ public class PlayerController : MonoBehaviour
             return StrategicCamera;
         if (FirstPersonCamera.enabled)
             return FirstPersonCamera;
-        if (SniperCamera.enabled)
-            return SniperCamera;
+        if (sniperConrol.SniperCamera.enabled)
+            return sniperConrol.SniperCamera;
         return null;
     }
 
-    private void Shoot()
-    {
-        sniperShootSound.PlayOneShot(sniperShootSound.clip);
-        Debug.Log("Shoot");
-    }
 }
