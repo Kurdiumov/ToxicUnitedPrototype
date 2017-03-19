@@ -219,12 +219,9 @@ MonoBehaviour:
   Name: Enemy
   Image: {fileID: 0}
   Health: 25
-  Attack: 10
   AttackRange: 50
-  AttackSpeed: 1
-  TimeBetweenShoots: 2
   isActive: 0
-  ShootSound: {fileID: 82187618176699064}
+  Weapon: {fileID: 0}
 --- !u!135 &135110156020694888
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -11,26 +11,22 @@ public class Enemy : MonoBehaviour
     public string Name;
     public Texture2D Image;
     public int Health;
-    public int Attack;
-    public int AttackRange;
-    public int AttackSpeed;
-    public float TimeBetweenShoots;
     public bool isActive = false;
-    public AudioSource ShootSound;
+    public Weapon Weapon;
     //public GameObject prefab;
 
     private List<Unit> UnitsInRange;
-    private float _timeFromLastShoot;
-    
+    private SphereCollider _sphereCollider;
     private void Start()
     {
         UnitsInRange = new List<Unit>();
+        _sphereCollider =  gameObject.GetComponentInChildren<SphereCollider>();
+        _sphereCollider.radius = Weapon.AttackRange;
     }
 
     private void Update()
     {
-        _timeFromLastShoot -= Time.deltaTime;
-        if (_timeFromLastShoot <= 0 && UnitsInRange.Count > 0 )
+        if (Weapon.TimeFromLastShoot <= 0 && UnitsInRange.Count > 0 )
         {
             Unit target = ChoseUnitTarget();
             TryAttack(target);
@@ -68,14 +64,23 @@ public class Enemy : MonoBehaviour
     {
         if (unit == null) //TODO: Fix here.
             return;
-        //TODO: Shooting chanse depends on distance
-        Shoot();
+        //TODO: Shooting chanse depends on distance and Weapon accuracy
+        if (Weapon.BulletsLeft > 0)
+        {
+            Weapon.Shoot();
+            
+        }
+        else
+        {
+            Weapon.Reload();
+            return;
+        }
         int randomNumber = Random.Range(0, 3);
 
         if (randomNumber != 2)  //chanse 2/3
         {
             Debug.Log("Attacking unit " + unit.name);
-            unit.GetDamage(this.Attack);
+            unit.GetDamage(Weapon.Attack);
         }
         else
         {
@@ -84,11 +89,5 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void Shoot()
-    {
-        //TODO: Ammo here
-        _timeFromLastShoot = TimeBetweenShoots;
-        Debug.Log("Shooting");
-        ShootSound.PlayOneShot(ShootSound.clip);
-    }
+
 }
