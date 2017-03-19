@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class Unit : MonoBehaviour {
     public void GetDamage(int damage)
     {
         this.Health -= damage;
+        Debug.Log("Getting damage " + damage + " HP: " + Health);
         if (this.Health <= 0)
         {
             Destroy(gameObject);

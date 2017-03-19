@@ -87,6 +87,7 @@ public class SniperControl : MonoBehaviour
                 {
                     Unit unit = (Unit) hitInfo.transform.GetComponent<Unit>();
                     unit.GetDamage(this.Attack);
+
                     Debug.Log("Hit comrad unit. Unit Health now is: " + unit.Health);
                 } 
                 else if (hitInfo.transform.gameObject.tag == "Enemy" && hitInfo.collider == hitInfo.transform.gameObject.GetComponent<CapsuleCollider>())
