@@ -64,11 +64,12 @@ public class Enemy : MonoBehaviour
     {
         if (unit == null) //TODO: Fix here.
             return;
+
+        transform.LookAt(unit.transform);
         //TODO: Shooting chanse depends on distance and Weapon accuracy
         if (Weapon.BulletsLeft > 0)
         {
             Weapon.Shoot();
-            
         }
         else
         {
