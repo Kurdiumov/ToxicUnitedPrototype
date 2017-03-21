@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Unit : MonoBehaviour
 {
@@ -24,9 +26,11 @@ public class Unit : MonoBehaviour
 
     private Weapon _weapon;
     private GameObject _weaponPrefab;
+    private List<Enemy> EnemiesInRange;
 
     private void Start()
     {
+        EnemiesInRange = new List<Enemy>();
         this._weapon = Weapon.create(WeaponType, _weaponPrefab, this.gameObject.transform);
         if (Speed == 0)
             Speed = 10;
@@ -44,6 +48,11 @@ public class Unit : MonoBehaviour
         if (isActive && activeNode < route.Count)
             moveUnit();
 
+        if (this.isActive && _weapon.TimeFromLastShoot <= 0 && EnemiesInRange.Count > 0)
+        {
+            Enemy target = ChoseEnemyTarget();
+            TryAttack(target);
+        }
     }
 
     private void moveUnit()
@@ -60,6 +69,56 @@ public class Unit : MonoBehaviour
         if (this.Health <= 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+
+    public void AddEnemyInRange(Enemy enemy)
+    {
+        EnemiesInRange.Add(enemy);
+    }
+
+    public void RemoveEnemyInRange(Enemy enemy)
+    {
+        if (EnemiesInRange.Contains(enemy))
+            EnemiesInRange.Remove(enemy);
+    }
+
+    private Enemy ChoseEnemyTarget()
+    {
+        int randomEnemy = Random.Range(0, EnemiesInRange.Count);
+        return EnemiesInRange.ElementAt(randomEnemy);
+    }
+
+    private void TryAttack(Enemy enemy)
+    {
+        if (enemy == null)
+        {
+            EnemiesInRange.Remove(enemy);
+            return;
+        }
+
+       // transform.LookAt(enemy.transform);
+
+        if (_weapon.BulletsLeft > 0)
+        {
+            _weapon.Shoot();
+        }
+        else
+        {
+            _weapon.Reload();
+            return;
+        }
+        int randomNumber = Random.Range(0, 100);
+
+        if (randomNumber <= _weapon.Accuracy)
+        {
+            Debug.Log("Attacking enemy " + enemy.name);
+            enemy.GetDamage(_weapon.Attack);
+        }
+        else
+        {
+            Debug.Log("miss");
         }
     }
 }
