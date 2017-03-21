@@ -16,21 +16,25 @@ public class Unit : MonoBehaviour {
 
     public bool isActive = false;
 
-    //public GameObject prefab;
+    public List<Vector3> route;
+    private int activeNode = 1;
 
-    private void Start()
+    private void Awake()
     {
         this.Health = 100;
+        route = new List<Vector3>();
     }
 
     private void Update() {
-        if (isActive)
+        if (isActive && activeNode < route.Count)
             moveUnit();
  
     }
 
     private void moveUnit() {
-        this.transform.Translate(Vector3.forward * Time.deltaTime * 10);
+        this.transform.Translate(Vector3.Normalize(route[activeNode] - this.transform.position) * Time.deltaTime * 100);
+        if (Vector3.Distance(this.gameObject.transform.position, route[activeNode]) < 10)
+            activeNode++;
     }
 
     public void GetDamage(int damage)

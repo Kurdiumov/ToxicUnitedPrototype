@@ -11,8 +11,8 @@ public class GameController : MonoBehaviour {
 
     private List<GameObject> AvailableUnits;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         // Init empty unit array
         AvailableUnits = new List<GameObject>();
 
