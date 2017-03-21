@@ -107,6 +107,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSpawn: 0
-  isObstacle: 0
+  isObstacle: 1
   isTarget: 0
   isCorrectMove: 0

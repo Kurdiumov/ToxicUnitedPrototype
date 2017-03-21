@@ -98,32 +98,34 @@ public class FieldController : MonoBehaviour {
         }
         Debug.Log(index);
         
-        if (index % 17 != 16)
+        if (index % 17 != 16 && !fields[index + 1].GetComponent<Field>().isObstacle)
             markField(fields[index + 1], false);
-        if (index % 17 != 0)
+        if (index % 17 != 0 && !fields[index - 1].GetComponent<Field>().isObstacle)
             markField(fields[index - 1], false);
-        if (index < 186)
+        if (index < 186 && !fields[index + 17].GetComponent<Field>().isObstacle)
             markField(fields[index + 17], false);
-        if (index > 16)
+        if (index > 16 && !fields[index - 17].GetComponent<Field>().isObstacle)
             markField(fields[index - 17], false);
 
         // Mark new moves
-        index = 0;
-        foreach (GameObject field in fields) {
-            if (field.Equals(currField)) {
-                break;
+        if (!currField.GetComponent<Field>().isTarget) {
+            index = 0;
+            foreach (GameObject field in fields) {
+                if (field.Equals(currField)) {
+                    break;
+                }
+                index++;
             }
-            index++;
-        }
 
-        if (index % 17 != 16 && !fields[index + 1].GetComponent<Field>().isObstacle)
-            markField(fields[index + 1], true);
-        if (index % 17 != 0 && !fields[index - 1].GetComponent<Field>().isObstacle)
-            markField(fields[index - 1], true);
-        if (index < 186 && !fields[index + 17].GetComponent<Field>().isObstacle)
-            markField(fields[index + 17], true);
-        if (index > 16 && !fields[index - 17].GetComponent<Field>().isObstacle)
-            markField(fields[index - 17], true);
+            if (index % 17 != 16 && !fields[index + 1].GetComponent<Field>().isObstacle)
+                markField(fields[index + 1], true);
+            if (index % 17 != 0 && !fields[index - 1].GetComponent<Field>().isObstacle)
+                markField(fields[index - 1], true);
+            if (index < 186 && !fields[index + 17].GetComponent<Field>().isObstacle)
+                markField(fields[index + 17], true);
+            if (index > 16 && !fields[index - 17].GetComponent<Field>().isObstacle)
+                markField(fields[index - 17], true);
+        }
     }
 
     private void markField(GameObject field, bool status) {
