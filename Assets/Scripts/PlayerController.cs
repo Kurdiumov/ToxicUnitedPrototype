@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerMove()
     {
+        
         if (charakterController.isGrounded)
         {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -109,6 +110,7 @@ public class PlayerController : MonoBehaviour
         {
             charakterController.height += 0.05f;
         }
+
     }
 
     public void CameraControl()

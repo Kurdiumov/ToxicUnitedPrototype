@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public float AttackRange;
     public float ReloadTime;
     public int BulletCapacity;
-
+    public float Accuracy;
 
     public int BulletsLeft { get; private set; }
     public float TimeFromLastShoot { get; private set; }
@@ -40,7 +40,6 @@ public class Weapon : MonoBehaviour
 
     public void Shoot()
     {
-        //TODO: Ammo here
         if (!_reloading)
         {
             TimeFromLastShoot = AttackSpeed;

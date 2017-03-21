@@ -24,7 +24,6 @@ public class SniperControl : MonoBehaviour
     private Canvas _sniperSightCanvas;
     private Text ammoText;
     private Image _sniperImage;
-    private readonly float _mouseSensitivity = 30;
     private float _timeFromLastShoot;
     
     void Start()
