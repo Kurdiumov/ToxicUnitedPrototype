@@ -8,31 +8,23 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour
 {
-    public enum weaponType
-    {
-        Ak47,
-        Shotgun,
-        UMP45,
-        M4A1,
-        Sniper,
-    }
-
-    public weaponType WeaponType;
+    public Weapon.weaponType WeaponType;
     public string Name;
     public Texture2D Image;
     public int Health;
     public bool isActive = true;
 
-    private  Weapon _weapon;
+    private Weapon _weapon;
     private GameObject _weaponPrefab;
 
     private List<Unit> UnitsInRange;
     private SphereCollider _sphereCollider;
 
     private Quaternion _localRotation;
+
     private void Start()
     {
-        SpawnWeapon();
+        this._weapon = Weapon.create(WeaponType, _weaponPrefab, this.gameObject.transform);
         UnitsInRange = new List<Unit>();
         _sphereCollider =  gameObject.GetComponentInChildren<SphereCollider>();
         _sphereCollider.radius = _weapon.AttackRange;
@@ -111,35 +103,5 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void SpawnWeapon()
-    {
-        switch (WeaponType)
-        {
-            case weaponType.Ak47:
-                _weaponPrefab = (GameObject)Instantiate(Resources.Load("Weapons/Ak-47"), gameObject.transform);
-                _weaponPrefab.transform.Translate(_weaponPrefab.transform.localPosition.x + 3f, _weaponPrefab.transform.localPosition.y + 1, _weaponPrefab.transform.localPosition.z + 4);
-                break;
-            case weaponType.Shotgun:
-                _weaponPrefab = (GameObject)Instantiate(Resources.Load("Weapons/Shotgun"), gameObject.transform);
-                _weaponPrefab.transform.Translate(_weaponPrefab.transform.localPosition.x + 2.8f, _weaponPrefab.transform.localPosition.y, _weaponPrefab.transform.localPosition.z + 3.3f);
-                break;
-            case weaponType.UMP45:
-                _weaponPrefab = (GameObject)Instantiate(Resources.Load("Weapons/UMP-45"), gameObject.transform);
-                _weaponPrefab.transform.Translate(_weaponPrefab.transform.localPosition.x + 2.5f, _weaponPrefab.transform.localPosition.y - 1, _weaponPrefab.transform.localPosition.z + 2);
-                break;
-            case weaponType.M4A1:
-                _weaponPrefab = (GameObject)Instantiate(Resources.Load("Weapons/M4A1"), gameObject.transform);
-                _weaponPrefab.transform.Translate(_weaponPrefab.transform.localPosition.x - 3f, _weaponPrefab.transform.localPosition.y, _weaponPrefab.transform.localPosition.z - 4);
-                break;
-            case weaponType.Sniper:
-                _weaponPrefab = (GameObject)Instantiate(Resources.Load("Weapons/SniperRifle"), gameObject.transform);
-                _weaponPrefab.transform.Translate(_weaponPrefab.transform.localPosition.x + 3f, _weaponPrefab.transform.localPosition.y + 1, _weaponPrefab.transform.localPosition.z);
-                break;
-            default:
-                throw new ArgumentException();
-        }
-
-        this._weapon = _weaponPrefab.GetComponent<Weapon>();
-    }
-
+   
 }

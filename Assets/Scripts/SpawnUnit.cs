@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnUnit : MonoBehaviour {
+public class SpawnUnit : MonoBehaviour
+{
 
     private GameController gameController;
     private FieldController fieldController;
@@ -11,52 +12,56 @@ public class SpawnUnit : MonoBehaviour {
 
     private bool waiting;
     private int unitIndex;
-    private GameObject unitPrefab;
+    private Unit _unit;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         gameController = GameObject.Find("_GameController").GetComponent<GameController>();
         fieldController = GameObject.Find("_GameController").GetComponent<FieldController>();
 
         route = new List<GameObject>();
         waiting = false;
         unitIndex = 0;
-        unitPrefab = null;
+        _unit = null;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (waiting) {
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (waiting)
+        {
             route = fieldController.getRoute();
 
-            if (route.Count > 1) {
-
-                // Instantiate it at the beginning of route
-                GameObject clone = Instantiate(unitPrefab, route[0].gameObject.transform.position, Quaternion.identity);
+            if (route.Count > 1)
+            {
+                _unit.transform.position = route[0].gameObject.transform.position;
+                _unit.transform.position += new Vector3(0.0f, 5f, 0.0f);
 
                 // Set route
-                foreach (GameObject node in route) {
-                    clone.GetComponent<Unit>().route.Add(node.transform.position);
+                foreach (GameObject node in route)
+                {
+                    _unit.GetComponent<Unit>().route.Add(node.transform.position);
                 }
 
-                // Set clone as active
-                clone.GetComponent<Unit>().isActive = true;
+                // Set as active
+                _unit.GetComponent<Unit>().isActive = true;
 
                 // ... and remove from unit panel
-                gameController.removeUnit(unitIndex);
+                gameController.RemoveUnit(unitIndex);
                 waiting = false;
             }
         }
-	}
+    }
 
-    public void UnitClicked() {
+    public void UnitClicked()
+    {
 
         // Obtain index from position at Content panel grid
         unitIndex = this.transform.GetSiblingIndex();
 
         // Get prefab object of clicked unit
-        unitPrefab = gameController.getPrefabOfUnit(unitIndex);
+        _unit = gameController.GetPrefabOfUnit(unitIndex);
 
         Debug.Log("Start route selection");
         // Select route (delegated to FieldController)

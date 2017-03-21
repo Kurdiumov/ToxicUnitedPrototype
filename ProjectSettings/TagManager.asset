@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Weapon
   - Field
+  - Unit
   layers:
   - Default
   - TransparentFX

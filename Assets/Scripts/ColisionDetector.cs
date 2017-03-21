@@ -19,7 +19,7 @@ public class ColisionDetector : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.name == "TestUnitObject")
+        if (col.transform.tag == "Unit")
         {
             Unit unit = col.transform.GetComponent<Unit>();
             _enemy.AddUnitInRange(unit);
@@ -29,7 +29,7 @@ public class ColisionDetector : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        if (col.transform.name == "TestUnitObject")
+        if (col.transform.tag == "Unit")
         {
             Unit unit = col.transform.GetComponent<Unit>();
             _enemy.RemoveUnitInRange(unit);

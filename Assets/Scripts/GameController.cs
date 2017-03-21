@@ -3,60 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     public GameObject UnitArrayPool;
 
     public GameObject UnitPanelTemplate;
 
-    private List<GameObject> AvailableUnits;
+    private List<Unit> AvailableUnits;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         // Init empty unit array
-        AvailableUnits = new List<GameObject>();
+        AvailableUnits = new List<Unit>();
 
-        // Load units:
-        addUnit("TestUnit");
-        addUnit("TestUnit");
-        addUnit("TestUnit");
+        foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
+        {
+            AddUnit(Unit.GetComponent<Unit>());
+        }
     }
 
     //Add unit by passing it's prefab
-    public void addUnit(string UnitPrefabName) {
-
+    public void AddUnit(Unit unit)
+    {
+        
         // Find prefab by passed name
-        GameObject unitPrefab = GameObject.Find(UnitPrefabName);
+       // GameObject unitPrefab = GameObject.Find(UnitPrefabName);
 
         // UnitPanel will be "mutation" of generic Template - with specified texture
         GameObject UnitPanel = UnitPanelTemplate;
 
         // Load texture from prefab's script
-        Texture2D image = unitPrefab.GetComponent<Unit>().Image;
+        Texture2D image = unit.Image;
 
         // Set loaded texture as active one
-        UnitPanel.GetComponent<RawImage>().texture = (Texture2D) image;
+        UnitPanel.GetComponent<RawImage>().texture = (Texture2D)image;
 
         // Instantiate mutated prefab
         Instantiate(UnitPanelTemplate, UnitArrayPool.transform);
 
-        AvailableUnits.Add(unitPrefab);
+        AvailableUnits.Add(unit);
+        
     }
 
-    public GameObject getPrefabOfUnit(int position) {
+    public Unit GetPrefabOfUnit(int position)
+    {
         return AvailableUnits[position];
     }
 
-    public void removeUnit(int position) {
+    public void RemoveUnit(int position)
+    {
         // Remove from array
         AvailableUnits.RemoveAt(position);
         // and delete GameObject (unit image in panel)
         Destroy(UnitArrayPool.transform.GetChild(position).gameObject);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-	    
-	}
+
+    }
 }

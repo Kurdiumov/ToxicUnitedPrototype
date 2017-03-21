@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 136681820053282864}
   - component: {fileID: 23535219015341798}
   - component: {fileID: 54574095746036720}
+  - component: {fileID: 114707854557429610}
   m_Layer: 0
   m_Name: TestUnitObject
   m_TagString: Untagged
@@ -140,11 +141,36 @@ MonoBehaviour:
   Type: 0
   Name: TestUnit
   Image: {fileID: 2800000, guid: 8e4fba0371ad47e46beaa65cd3fbbbc5, type: 3}
-  Health: 0
+  Health: 100
   Attack: 0
   AttackRange: 0
   AttackSpeed: 0
+  Speed: 0
+  WeaponType: 3
   isActive: 0
+  route: []
+--- !u!114 &114707854557429610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1394347491996384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5809fd55076bce2458b99b1be894446a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+  Name: 
+  Image: {fileID: 0}
+  Health: 100
+  Attack: 0
+  AttackRange: 0
+  AttackSpeed: 0
+  Speed: 0
+  WeaponType: 0
+  isActive: 0
+  route: []
 --- !u!136 &136681820053282864
 CapsuleCollider:
   m_ObjectHideFlags: 1
