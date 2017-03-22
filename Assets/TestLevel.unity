@@ -293,6 +293,11 @@ Prefab:
       propertyPath: movespeedFactor
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 529b0c9e15c31234283ce07a01554081, type: 2}
   m_IsPrefabParent: 0
@@ -821,6 +826,11 @@ Prefab:
     - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
         type: 2}
       propertyPath: movespeedFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2453,7 +2463,7 @@ Prefab:
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1308534229137794, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
       propertyPath: m_Name
@@ -2472,6 +2482,11 @@ Prefab:
         type: 2}
       propertyPath: Name
       value: SniperEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
+        type: 2}
+      propertyPath: IsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82187618176699064, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
@@ -2585,6 +2600,11 @@ Prefab:
         type: 2}
       propertyPath: isObstacle
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 529b0c9e15c31234283ce07a01554081, type: 2}
@@ -2925,12 +2945,17 @@ Prefab:
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: Name
       value: UMP45Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
+        type: 2}
+      propertyPath: IsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82187618176699064, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
@@ -4021,6 +4046,11 @@ Prefab:
     - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
         type: 2}
       propertyPath: isTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5616,7 +5646,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -565, y: 252}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 223.14, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &508920390
 MonoBehaviour:
@@ -5631,7 +5661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7778,7 +7808,7 @@ Prefab:
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1308534229137794, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
       propertyPath: m_Name
@@ -7797,6 +7827,11 @@ Prefab:
         type: 2}
       propertyPath: Name
       value: SniperEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
+        type: 2}
+      propertyPath: IsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82187618176699064, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
@@ -7987,6 +8022,11 @@ Prefab:
     - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
         type: 2}
       propertyPath: isTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8659,6 +8699,11 @@ Prefab:
     - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
         type: 2}
       propertyPath: isTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -10220,7 +10265,7 @@ Prefab:
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
@@ -10235,6 +10280,11 @@ Prefab:
         type: 2}
       propertyPath: Name
       value: M4A1Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
+        type: 2}
+      propertyPath: IsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82187618176699064, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
@@ -10885,6 +10935,11 @@ Prefab:
     - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
         type: 2}
       propertyPath: isTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -16059,7 +16114,7 @@ Prefab:
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
@@ -16074,6 +16129,11 @@ Prefab:
         type: 2}
       propertyPath: Name
       value: ShotgunEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
+        type: 2}
+      propertyPath: IsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82187618176699064, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
@@ -17682,12 +17742,17 @@ Prefab:
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
         type: 2}
       propertyPath: Name
       value: Ak47Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 114390551114566762, guid: 04942dc04dfd2bf4fbf0aefff81357cc,
+        type: 2}
+      propertyPath: IsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 82187618176699064, guid: 04942dc04dfd2bf4fbf0aefff81357cc, type: 2}
@@ -18666,6 +18731,11 @@ Prefab:
     - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
         type: 2}
       propertyPath: isTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114961271937730080, guid: 529b0c9e15c31234283ce07a01554081,
+        type: 2}
+      propertyPath: isFinalTarget
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

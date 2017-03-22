@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Field : MonoBehaviour {
+public class Field : MonoBehaviour
+{
     public bool isSpawn = false;
     public bool isObstacle = false;
     public bool isTarget = false;
+    public bool isFinalTarget = false;
 
     public double movespeedFactor = 0.7;
 
@@ -14,12 +16,14 @@ public class Field : MonoBehaviour {
     private FieldController fieldController;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         fieldController = GameObject.Find("_GameController").GetComponent<FieldController>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

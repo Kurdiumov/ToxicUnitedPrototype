@@ -58,6 +58,11 @@ public class Unit : MonoBehaviour
             {
                 GameObject actualField = hit.transform.gameObject;
                 this.field = actualField.GetComponent<Field>();
+
+                if (this.field.isFinalTarget)
+                {
+                    GameObject.Find("_GameController").GetComponent<GameController>().EndGame();
+                }
             }
             moveUnit();
         }
@@ -67,6 +72,8 @@ public class Unit : MonoBehaviour
             Enemy target = ChoseEnemyTarget();
             TryAttack(target);
         }
+
+       
     }
 
     private void moveUnit()

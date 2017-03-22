@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour
         foreach (var Enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             var enemy = Enemy.GetComponent<Enemy>();
-            enemy.isActive = true;
+            enemy.SetActive(true);
         }
     }
 
@@ -104,7 +104,7 @@ public class GameController : MonoBehaviour
         foreach (var Enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             var enemy = Enemy.GetComponent<Enemy>();
-            enemy.isActive = false;
+            enemy.SetActive(false);
         }
 
         _startButton.SetActive(true);
@@ -193,8 +193,9 @@ public class GameController : MonoBehaviour
     // Put for future, ending assault
     public void EndGame()
     {
-
+        _currentWave = _waves.Count + 1;
+        Debug.Log("You win!!");
+       
     }
-
 
 }

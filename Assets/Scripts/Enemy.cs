@@ -12,8 +12,9 @@ public class Enemy : MonoBehaviour
     public string Name;
     public Texture2D Image;
     public int Health;
-    public bool isActive = true;
+    public bool IsEnabled;
 
+    private bool _isActive;
     private Weapon _weapon;
     private GameObject _weaponPrefab;
 
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (this.isActive && _weapon.TimeFromLastShoot <= 0 && UnitsInRange.Count > 0 )
+        if (this.IsEnabled && this._isActive && _weapon.TimeFromLastShoot <= 0 && UnitsInRange.Count > 0 )
         {
             Unit target = ChoseUnitTarget();
             TryAttack(target);
@@ -103,5 +104,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void SetActive(bool state)
+    {
+        _isActive = state;
+    }
    
 }
