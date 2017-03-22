@@ -119,7 +119,7 @@ public class FieldController : MonoBehaviour
             }
             index++;
         }
-        Debug.Log(index);
+        //Debug.Log(index);
 
         if (index % 17 != 16 && !fields[index + 1].GetComponent<Field>().isObstacle)
             markField(fields[index + 1], false);

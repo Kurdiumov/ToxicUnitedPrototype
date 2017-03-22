@@ -9,6 +9,7 @@ TagManager:
   - Weapon
   - Field
   - Unit
+  - EnemySpawner
   layers:
   - Default
   - TransparentFX
