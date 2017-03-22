@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SwitchControl(Mode.Sniper);
                 }
-                if (Input.GetKeyDown(KeyCode.Tab))
+                if (Input.GetKeyDown(KeyCode.Tab) && !GameController.roundRunning)
                 {
                     SwitchControl(Mode.Strategic);
                 }
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
                 PlayerMove();
                 break;
             case Mode.Strategic:
-                if (Input.GetKeyDown(KeyCode.Tab))
+                if (Input.GetKeyDown(KeyCode.Tab) && GameController.roundRunning)
                 {
                     SwitchControl(Mode.FirstPerson);
                 }

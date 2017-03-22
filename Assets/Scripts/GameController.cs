@@ -11,15 +11,85 @@ public class GameController : MonoBehaviour {
 
     private List<GameObject> AvailableUnits;
 
+    public PlayerController player;
+    
+    
+    public float turnDuration = 6.0f;
+    private float timeLeft;
+
+    public static bool roundRunning = false;
+
+
+    public List<int> waves;
+    int currentWave;
+    
+
 	// Use this for initialization
 	void Start () {
         // Init empty unit array
         AvailableUnits = new List<GameObject>();
 
         // Load units:
-        addUnit("TestUnit");
-        addUnit("TestUnit");
-        addUnit("TestUnit");
+        waves = new List<int>();
+        waves.Add(4);
+        waves.Add(4);
+        waves.Add(5);
+        waves.Add(4);
+        currentWave = 0;
+        spawnUnits(4);
+
+        //Setting starting mode of player
+        player.SwitchControl(PlayerController.Mode.Strategic);
+        roundRunning = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if( roundRunning)
+        {
+            timeLeft -= Time.deltaTime;
+            Debug.Log(timeLeft);
+            if ( timeLeft < 0)
+            {
+                endRound();
+            }
+        }
+    }
+
+    //Start the round
+    public void startRound()
+    {
+        player.SwitchControl(PlayerController.Mode.FirstPerson);
+        roundRunning = true;
+        timeLeft = turnDuration;
+    }
+
+
+    // End the round
+    public void endRound()
+    {
+        player.SwitchControl(PlayerController.Mode.Strategic);
+        roundRunning = false;
+
+        currentWave++;
+        if(currentWave >= waves.Count)
+        {
+            endGame();
+        }
+        else
+        {
+            spawnUnits(waves[currentWave]);
+        }
+    }
+
+    //Adding list of units, would useful for future
+    public void spawnUnits(int n)
+    {
+        for(int i =0; i < n; i++)
+        {
+            addUnit("TestUnit");
+        }
     }
 
     //Add unit by passing it's prefab
@@ -53,10 +123,13 @@ public class GameController : MonoBehaviour {
         // and delete GameObject (unit image in panel)
         Destroy(UnitArrayPool.transform.GetChild(position).gameObject);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+
+    // Put for future, ending assault
+    public void endGame()
     {
-	    
-	}
+
+    }
+	
+	
 }
