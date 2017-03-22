@@ -24,10 +24,13 @@ public class GameController : MonoBehaviour
     public List<int> waves;
     int currentWave;
 
+    private GameObject _startButton;
 
     // Use this for initialization
     void Start()
     {
+        _startButton = GameObject.Find("Button").gameObject;
+        
         // Init empty unit array
         AvailableUnits = new List<Unit>();
 
@@ -64,6 +67,7 @@ public class GameController : MonoBehaviour
     //Start the round
     public void startRound()
     {
+        _startButton.SetActive(false);
         player.SwitchControl(PlayerController.Mode.FirstPerson);
         roundRunning = true;
         timeLeft = turnDuration;
@@ -79,6 +83,7 @@ public class GameController : MonoBehaviour
     // End the round
     public void endRound()
     {
+        _startButton.SetActive(true);
         player.SwitchControl(PlayerController.Mode.Strategic);
         roundRunning = false;
 
