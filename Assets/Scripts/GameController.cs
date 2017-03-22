@@ -77,12 +77,30 @@ public class GameController : MonoBehaviour
             var unit = Unit.GetComponent<Unit>();
             unit.isActive = true;
         }
+
+        foreach (var Enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            var enemy = Enemy.GetComponent<Enemy>();
+            enemy.isActive = true;
+        }
     }
 
 
     // End the round
     public void endRound()
     {
+        foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
+        {
+            var unit = Unit.GetComponent<Unit>();
+            unit.isActive = false;
+        }
+
+        foreach (var Enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            var enemy = Enemy.GetComponent<Enemy>();
+            enemy.isActive = false;
+        }
+
         _startButton.SetActive(true);
         player.SwitchControl(PlayerController.Mode.Strategic);
         roundRunning = false;
