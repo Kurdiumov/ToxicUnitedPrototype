@@ -49,7 +49,20 @@ public class PlayerController : MonoBehaviour
         foreach (var gameObj in GameObject.FindGameObjectsWithTag("StrategyView"))
         {
             StrategyViewUIList.Add(gameObj);
-            gameObj.SetActive(false);
+            //gameObj.SetActive(false);
+            if (gameObj.layer == 8)
+                gameObj.GetComponent<MeshRenderer>().enabled = false;
+            else
+                gameObj.SetActive(false);
+        }
+        foreach (var gameObj in GameObject.FindGameObjectsWithTag("Field"))
+        {
+            StrategyViewUIList.Add(gameObj);
+            //gameObj.SetActive(false);
+            if (gameObj.layer == 8)
+                gameObj.GetComponent<MeshRenderer>().enabled = false;
+            else
+                gameObj.SetActive(false);
         }
     }
 
@@ -144,12 +157,17 @@ public class PlayerController : MonoBehaviour
         switch (moveMode)
         {
             case Mode.FirstPerson:
-                sniperConrol.EnableText();  
+                sniperConrol.EnableText();
                 sniperConrol.Disable();
                 ToggleCamera(FirstPersonCamera);
                 //Switch to Firs Person view
-                foreach (var gameObject in StrategyViewUIList)
-                    gameObject.SetActive(false);
+                foreach (var gameObject in StrategyViewUIList) { 
+                    //gameObject.SetActive(false); // disable colliders for raycasting
+                    if (gameObject.layer == 8)
+                        gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    else
+                        gameObject.SetActive(false);
+                }
 
                 moveMode = Mode.FirstPerson;
                 Cursor.visible = false;
@@ -165,7 +183,13 @@ public class PlayerController : MonoBehaviour
                 sniperConrol.DisableText();
                 ToggleCamera(StrategicCamera);
                 foreach (var gameObject in StrategyViewUIList)
-                    gameObject.SetActive(true);
+                {
+                    //gameObject.SetActive(true); // disable colliders for raycasting
+                    if (gameObject.layer == 8)
+                        gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    else
+                        gameObject.SetActive(true);
+                }
 
                 moveMode = Mode.Strategic;
                 Cursor.visible = true;

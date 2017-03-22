@@ -28,6 +28,8 @@ public class Unit : MonoBehaviour
     private GameObject _weaponPrefab;
     private List<Enemy> EnemiesInRange;
 
+    public Field field;
+
     private void Start()
     {
         EnemiesInRange = new List<Enemy>();
@@ -46,7 +48,19 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         if (isActive && activeNode < route.Count)
+        {
+            RaycastHit hit = new RaycastHit();
+            Vector3 position = this.transform.position;
+            Ray ray = new Ray(position, Vector3.down*10);
+            Debug.DrawRay(position, Vector3.down * 10, Color.cyan, 20);
+            int gridLayer = LayerMask.GetMask("Tiles");
+            if (Physics.Raycast(ray, out hit, 100.0f, gridLayer))
+            {
+                GameObject actualField = hit.transform.gameObject;
+                this.field = actualField.GetComponent<Field>();
+            }
             moveUnit();
+        }
 
         if (this.isActive && _weapon.TimeFromLastShoot <= 0 && EnemiesInRange.Count > 0)
         {
@@ -57,7 +71,7 @@ public class Unit : MonoBehaviour
 
     private void moveUnit()
     {
-        this.transform.Translate(Vector3.Normalize(route[activeNode] - this.transform.position) * Time.deltaTime * Speed);
+        this.transform.Translate(Vector3.Normalize(route[activeNode] - this.transform.position) * Time.deltaTime * Speed * (float)field.movespeedFactor);
         if (Vector3.Distance(this.gameObject.transform.position, route[activeNode]) < 10)
             activeNode++;
     }
@@ -98,7 +112,7 @@ public class Unit : MonoBehaviour
             return;
         }
 
-       // transform.LookAt(enemy.transform);
+        // transform.LookAt(enemy.transform);
 
         if (_weapon.BulletsLeft > 0)
         {

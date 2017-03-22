@@ -7,6 +7,8 @@ public class Field : MonoBehaviour {
     public bool isObstacle = false;
     public bool isTarget = false;
 
+    public double movespeedFactor = 0.7;
+
     public bool isCorrectMove = false;
 
     private FieldController fieldController;
