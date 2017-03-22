@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController charakterController;
     private PlayerController playerController;
     private SniperControl sniperConrol;
-
+    private GameController _gameController;
     void Start()
     {
         moveMode = Mode.FirstPerson;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         charakterController = gameObject.GetComponent<CharacterController>();
         playerController = gameObject.GetComponent<PlayerController>();
         sniperConrol = gameObject.GetComponent<SniperControl>();
-
+        _gameController = GameObject.Find("_GameController").GetComponent<GameController>();
 
         foreach (var gameObj in GameObject.FindGameObjectsWithTag("StrategyView"))
         {
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SwitchControl(Mode.Sniper);
                 }
-                if (Input.GetKeyDown(KeyCode.Tab) && !GameController.roundRunning)
+                if (Input.GetKeyDown(KeyCode.Tab) && !_gameController.RoundRunning)
                 {
                     SwitchControl(Mode.Strategic);
                 }
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
                 PlayerMove();
                 break;
             case Mode.Strategic:
-                if (Input.GetKeyDown(KeyCode.Tab) && GameController.roundRunning)
+                if (Input.GetKeyDown(KeyCode.Tab) && _gameController.RoundRunning)
                 {
                     SwitchControl(Mode.FirstPerson);
                 }

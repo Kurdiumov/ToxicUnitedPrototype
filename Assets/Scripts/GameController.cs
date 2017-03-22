@@ -10,55 +10,54 @@ public class GameController : MonoBehaviour
 
     public GameObject UnitPanelTemplate;
 
-    private List<Unit> AvailableUnits;
+    public float TurnDuration;
 
-    public PlayerController player;
+    public PlayerController Player;
 
-    public float turnDuration;
+    public  bool RoundRunning;
+
     private float timeLeft;
 
-    public static bool roundRunning = false;
-
-
-    public List<int> waves;
-    int currentWave;
-
+    private List<int> _waves;
+    private int _currentWave;
     private GameObject _startButton;
-
-    private List<Unit> UnitsInBattlefield;
+    private List<Unit> _unitsInBattlefield;
+    private List<Unit> _availableUnits;
+    private Text _timerText;
 
     // Use this for initialization
     void Start()
     {
         _startButton = GameObject.Find("Button").gameObject;
-        
+        _timerText = GameObject.Find("TimerText").GetComponent<Text>();
+        _timerText.enabled = false;
         // Init empty unit array
-        AvailableUnits = new List<Unit>();
-        UnitsInBattlefield = new List<Unit>();
+        _availableUnits = new List<Unit>();
+        _unitsInBattlefield = new List<Unit>();
         // Load units:
-        waves = new List<int>();
-        waves.Add(4);
-        waves.Add(4);
-        waves.Add(5);
-        waves.Add(4);
+        _waves = new List<int>();
+        _waves.Add(4);
+        _waves.Add(4);
+        _waves.Add(5);
+        _waves.Add(4);
 
-        currentWave = 0;
-        SpawnUnits(waves[0]);
+        _currentWave = 0;
+        SpawnUnits(_waves[0]);
 
 
-        //Setting starting mode of player
-        player.SwitchControl(PlayerController.Mode.Strategic);
-        roundRunning = false;
+        //Setting starting mode of Player
+        Player.SwitchControl(PlayerController.Mode.Strategic);
+        RoundRunning = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (roundRunning)
+        if (RoundRunning)
         {
             timeLeft -= Time.deltaTime;
-            Debug.Log(timeLeft);
-            if (timeLeft < 0 || UnitsInBattlefield.Count <= 0)
+            _timerText.text = "Time Left: " + (int)timeLeft;
+            if (timeLeft < 0 || _unitsInBattlefield.Count <= 0)
             {
                 EndRound();
             }
@@ -69,13 +68,14 @@ public class GameController : MonoBehaviour
     //Start the round
     public void StartRound()
     {
-        if (UnitsInBattlefield.Count <= 0)
+        _timerText.enabled = true;
+        if (_unitsInBattlefield.Count <= 0)
             return;
 
         _startButton.SetActive(false);
-        player.SwitchControl(PlayerController.Mode.FirstPerson);
-        roundRunning = true;
-        timeLeft = turnDuration;
+        Player.SwitchControl(PlayerController.Mode.FirstPerson);
+        RoundRunning = true;
+        timeLeft = TurnDuration;
 
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
         {
@@ -94,6 +94,7 @@ public class GameController : MonoBehaviour
     // End the round
     public void EndRound()
     {
+        _timerText.enabled = false;
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
         {
             var unit = Unit.GetComponent<Unit>();
@@ -107,17 +108,17 @@ public class GameController : MonoBehaviour
         }
 
         _startButton.SetActive(true);
-        player.SwitchControl(PlayerController.Mode.Strategic);
-        roundRunning = false;
+        Player.SwitchControl(PlayerController.Mode.Strategic);
+        RoundRunning = false;
 
-        currentWave++;
-        if (currentWave >= waves.Count)
+        _currentWave++;
+        if (_currentWave >= _waves.Count)
         {
             EndGame();
         }
         else
         {
-            SpawnUnits(waves[currentWave]);
+            SpawnUnits(_waves[_currentWave]);
         }
     }
 
@@ -161,29 +162,29 @@ public class GameController : MonoBehaviour
         // Instantiate mutated prefab
         Instantiate(UnitPanelTemplate, UnitArrayPool.transform);
 
-        AvailableUnits.Add(unit);
+        _availableUnits.Add(unit);
 
     }
 
     public void AddUnitToBattlefield(Unit unit)
     {
-        UnitsInBattlefield.Add(unit);
+        _unitsInBattlefield.Add(unit);
     }
 
     public void RemoveUnitFromBattlefield(Unit unit)
     {
-        UnitsInBattlefield.Remove(unit);
+        _unitsInBattlefield.Remove(unit);
     }
 
     public Unit GetPrefabOfUnit(int position)
     {
-        return AvailableUnits[position];
+        return _availableUnits[position];
     }
 
     public void RemoveUnit(int position)
     {
         // Remove from array
-        AvailableUnits.RemoveAt(position);
+        _availableUnits.RemoveAt(position);
         // and delete GameObject (unit image in panel)
         Destroy(UnitArrayPool.transform.GetChild(position).gameObject);
     }
