@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour {
         waves.Add(5);
         waves.Add(4);
         currentWave = 0;
-        spawnUnits(4);
+        spawnUnits(waves[0]);
 
         //Setting starting mode of player
         player.SwitchControl(PlayerController.Mode.Strategic);
