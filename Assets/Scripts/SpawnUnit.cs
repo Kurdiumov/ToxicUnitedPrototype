@@ -44,9 +44,6 @@ public class SpawnUnit : MonoBehaviour
                     _unit.GetComponent<Unit>().route.Add(node.transform.position);
                 }
 
-                // Set as active
-                _unit.GetComponent<Unit>().isActive = true;
-
                 // ... and remove from unit panel
                 gameController.RemoveUnit(unitIndex);
                 waiting = false;

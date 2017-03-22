@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114625504424674866}
   m_Layer: 0
   m_Name: TestUnit
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,8 @@ MonoBehaviour:
   Attack: 0
   AttackRange: 0
   AttackSpeed: 0
+  Speed: 0
+  WeaponType: 0
   isActive: 0
   route: []
 --- !u!136 &136681820053282864

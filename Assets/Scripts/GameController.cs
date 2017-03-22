@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +12,105 @@ public class GameController : MonoBehaviour
 
     private List<Unit> AvailableUnits;
 
+    public PlayerController player;
+
+
+    public float turnDuration = 6.0f;
+    private float timeLeft;
+
+    public static bool roundRunning = false;
+
+
+    public List<int> waves;
+    int currentWave;
+
+
     // Use this for initialization
     void Start()
     {
         // Init empty unit array
         AvailableUnits = new List<Unit>();
 
+        // Load units:
+        waves = new List<int>();
+        waves.Add(4);
+        waves.Add(4);
+        waves.Add(5);
+        waves.Add(4);
+
+        currentWave = 0;
+        SpawnUnits(waves[0]);
+
+
+        //Setting starting mode of player
+        player.SwitchControl(PlayerController.Mode.Strategic);
+        roundRunning = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (roundRunning)
+        {
+            timeLeft -= Time.deltaTime;
+            Debug.Log(timeLeft);
+            if (timeLeft < 0)
+            {
+                endRound();
+            }
+        }
+    }
+
+    //Start the round
+    public void startRound()
+    {
+        player.SwitchControl(PlayerController.Mode.FirstPerson);
+        roundRunning = true;
+        timeLeft = turnDuration;
+
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
         {
+            var unit = Unit.GetComponent<Unit>();
+            unit.isActive = true;
+        }
+    }
+
+
+    // End the round
+    public void endRound()
+    {
+        player.SwitchControl(PlayerController.Mode.Strategic);
+        roundRunning = false;
+
+        currentWave++;
+        if (currentWave >= waves.Count)
+        {
+            endGame();
+        }
+        else
+        {
+            SpawnUnits(waves[currentWave]);
+        }
+    }
+
+    //Adding list of units, would useful for future
+    public void SpawnUnits(int n)
+    {
+
+        var Units = GameObject.Find("Units");
+        for (int i = 0; i < n; i++)
+        {
+            //addUnit("TestUnit");
+            var rename =  (GameObject)Instantiate(Resources.Load("TestUnit"));
+            
+            rename.transform.parent = Units.transform;
+            rename.transform.Translate(rename.transform.localPosition.x + 5*i, rename.transform.localPosition.y, rename.transform.localPosition.z );
+        }
+
+        foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
+        {
+            var unit = Unit.GetComponent<Unit>();
+            unit.isActive = false;
             AddUnit(Unit.GetComponent<Unit>());
         }
     }
@@ -27,9 +118,9 @@ public class GameController : MonoBehaviour
     //Add unit by passing it's prefab
     public void AddUnit(Unit unit)
     {
-        
+
         // Find prefab by passed name
-       // GameObject unitPrefab = GameObject.Find(UnitPrefabName);
+        // GameObject unitPrefab = GameObject.Find(UnitPrefabName);
 
         // UnitPanel will be "mutation" of generic Template - with specified texture
         GameObject UnitPanel = UnitPanelTemplate;
@@ -44,7 +135,7 @@ public class GameController : MonoBehaviour
         Instantiate(UnitPanelTemplate, UnitArrayPool.transform);
 
         AvailableUnits.Add(unit);
-        
+
     }
 
     public Unit GetPrefabOfUnit(int position)
@@ -60,9 +151,12 @@ public class GameController : MonoBehaviour
         Destroy(UnitArrayPool.transform.GetChild(position).gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    // Put for future, ending assault
+    public void endGame()
     {
 
     }
+
+
 }
