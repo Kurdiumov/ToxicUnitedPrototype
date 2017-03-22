@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1586,7 +1586,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1478157083}
-        m_MethodName: startRound
+        m_MethodName: StartRound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12928,7 +12928,7 @@ MonoBehaviour:
   UnitPanelTemplate: {fileID: 1344895279501544, guid: 74e28f11089e6b944ad378746438f068,
     type: 2}
   player: {fileID: 130074738}
-  turnDuration: 6
+  turnDuration: 120
   waves: 
 --- !u!4 &1478157084
 Transform:

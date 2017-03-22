@@ -82,6 +82,7 @@ public class Unit : MonoBehaviour
         Debug.Log("Getting damage " + damage + " HP: " + Health);
         if (this.Health <= 0)
         {
+            GameObject.Find("_GameController").GetComponent<GameController>().RemoveUnitFromBattlefield(this.gameObject.GetComponent<Unit>());
             Destroy(gameObject);
         }
     }

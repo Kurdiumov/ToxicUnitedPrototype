@@ -14,8 +14,7 @@ public class GameController : MonoBehaviour
 
     public PlayerController player;
 
-
-    public float turnDuration = 6.0f;
+    public float turnDuration;
     private float timeLeft;
 
     public static bool roundRunning = false;
@@ -26,6 +25,8 @@ public class GameController : MonoBehaviour
 
     private GameObject _startButton;
 
+    private List<Unit> UnitsInBattlefield;
+
     // Use this for initialization
     void Start()
     {
@@ -33,7 +34,7 @@ public class GameController : MonoBehaviour
         
         // Init empty unit array
         AvailableUnits = new List<Unit>();
-
+        UnitsInBattlefield = new List<Unit>();
         // Load units:
         waves = new List<int>();
         waves.Add(4);
@@ -57,16 +58,20 @@ public class GameController : MonoBehaviour
         {
             timeLeft -= Time.deltaTime;
             Debug.Log(timeLeft);
-            if (timeLeft < 0)
+            if (timeLeft < 0 || UnitsInBattlefield.Count <= 0)
             {
-                endRound();
+                EndRound();
             }
         }
+
     }
 
     //Start the round
-    public void startRound()
+    public void StartRound()
     {
+        if (UnitsInBattlefield.Count <= 0)
+            return;
+
         _startButton.SetActive(false);
         player.SwitchControl(PlayerController.Mode.FirstPerson);
         roundRunning = true;
@@ -87,7 +92,7 @@ public class GameController : MonoBehaviour
 
 
     // End the round
-    public void endRound()
+    public void EndRound()
     {
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
         {
@@ -108,7 +113,7 @@ public class GameController : MonoBehaviour
         currentWave++;
         if (currentWave >= waves.Count)
         {
-            endGame();
+            EndGame();
         }
         else
         {
@@ -119,7 +124,6 @@ public class GameController : MonoBehaviour
     //Adding list of units, would useful for future
     public void SpawnUnits(int n)
     {
-
         var Units = GameObject.Find("Units");
         for (int i = 0; i < n; i++)
         {
@@ -161,6 +165,16 @@ public class GameController : MonoBehaviour
 
     }
 
+    public void AddUnitToBattlefield(Unit unit)
+    {
+        UnitsInBattlefield.Add(unit);
+    }
+
+    public void RemoveUnitFromBattlefield(Unit unit)
+    {
+        UnitsInBattlefield.Remove(unit);
+    }
+
     public Unit GetPrefabOfUnit(int position)
     {
         return AvailableUnits[position];
@@ -176,7 +190,7 @@ public class GameController : MonoBehaviour
 
 
     // Put for future, ending assault
-    public void endGame()
+    public void EndGame()
     {
 
     }

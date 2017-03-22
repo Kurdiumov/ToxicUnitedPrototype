@@ -47,6 +47,7 @@ public class SpawnUnit : MonoBehaviour
                 // ... and remove from unit panel
                 gameController.RemoveUnit(unitIndex);
                 waiting = false;
+                gameController.AddUnitToBattlefield(_unit.GetComponent<Unit>());
             }
         }
     }
