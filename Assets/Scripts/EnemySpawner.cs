@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public bool HasSpecifiedWeapon;
     public Weapon.weaponType WeaponType;
     public float TimeBetweenSpawn;
+    public bool IsEnabled;
 
     private Enemy _enemyInstance;
     private float _timeLeft;
@@ -17,13 +18,14 @@ public class EnemySpawner : MonoBehaviour
     {
         _Enemies = GameObject.Find("Enemies");
         _startTimer = false;
-        SpawnEnemy();
+        if (IsEnabled)
+            SpawnEnemy();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_enemyInstance == null)
+        if (IsEnabled && _enemyInstance == null)
         {
             if (_startTimer)
                 _timeLeft = TimeBetweenSpawn;
@@ -41,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.tag == "Enemy" )
+        if (IsEnabled && col.transform.tag == "Enemy" )
         {
             _enemyInstance = col.GetComponent<Enemy>();
         }

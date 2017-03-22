@@ -82,7 +82,7 @@ public class SniperControl : MonoBehaviour
             {
                 //TODO:
                 //For new attack insert code here
-                if (hitInfo.transform.name == "TestUnit")
+                if (hitInfo.transform.tag == "Unit")
                 {
                     Unit unit = (Unit) hitInfo.transform.GetComponent<Unit>();
                     unit.GetDamage(this.Attack);
