@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 54860916876300264}
   m_Layer: 2
   m_Name: EnemySpawner
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 0
   WeaponType: 1
-  TimeBetweenSpawn: 2
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &135645344792145664
 SphereCollider:

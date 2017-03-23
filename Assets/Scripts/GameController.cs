@@ -64,6 +64,9 @@ public class GameController : MonoBehaviour
     //Start the round
     public void StartRound()
     {
+        foreach (var spawn in GameObject.FindGameObjectsWithTag("EnemySpawner"))
+            spawn.gameObject.GetComponent<EnemySpawner>().IsEnabled = false;
+
         _timerText.enabled = true;
         if (_unitsInBattlefield.Count <= 0)
             return;
@@ -90,6 +93,8 @@ public class GameController : MonoBehaviour
     // End the round
     public void EndRound()
     {
+        foreach (var spawn in GameObject.FindGameObjectsWithTag("EnemySpawner"))
+            spawn.gameObject.GetComponent<EnemySpawner>().IsEnabled = true;
         _timerText.enabled = false;
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
         {

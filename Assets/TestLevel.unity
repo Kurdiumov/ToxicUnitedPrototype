@@ -3128,7 +3128,7 @@ GameObject:
   - component: {fileID: 237032955}
   m_Layer: 2
   m_Name: EnemySpawner (10)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3174,7 +3174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 1
   WeaponType: 1
-  TimeBetweenSpawn: 3
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &237032957
 SphereCollider:
@@ -5175,7 +5175,7 @@ GameObject:
   - component: {fileID: 445866687}
   m_Layer: 2
   m_Name: EnemySpawner (9)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5221,7 +5221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 1
   WeaponType: 0
-  TimeBetweenSpawn: 3
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &445866689
 SphereCollider:
@@ -9647,7 +9647,7 @@ GameObject:
   - component: {fileID: 1061755393}
   m_Layer: 2
   m_Name: EnemySpawner (1)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9693,7 +9693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 0
   WeaponType: 1
-  TimeBetweenSpawn: 2
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1061755395
 SphereCollider:
@@ -12124,7 +12124,7 @@ GameObject:
   - component: {fileID: 1362078337}
   m_Layer: 2
   m_Name: EnemySpawner (2)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12170,7 +12170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 0
   WeaponType: 1
-  TimeBetweenSpawn: 2
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1362078339
 SphereCollider:
@@ -12985,7 +12985,7 @@ GameObject:
   - component: {fileID: 1466632091}
   m_Layer: 2
   m_Name: EnemySpawner (6)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13031,7 +13031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 0
   WeaponType: 1
-  TimeBetweenSpawn: 4
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1466632093
 SphereCollider:
@@ -14511,7 +14511,7 @@ GameObject:
   - component: {fileID: 1600949906}
   m_Layer: 2
   m_Name: EnemySpawner (7)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14557,7 +14557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 1
   WeaponType: 1
-  TimeBetweenSpawn: 3
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1600949908
 SphereCollider:
@@ -16371,7 +16371,7 @@ GameObject:
   - component: {fileID: 1778417926}
   m_Layer: 2
   m_Name: EnemySpawner (5)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16417,7 +16417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 1
   WeaponType: 4
-  TimeBetweenSpawn: 6
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1778417928
 SphereCollider:
@@ -16444,7 +16444,7 @@ GameObject:
   - component: {fileID: 1778424142}
   m_Layer: 2
   m_Name: EnemySpawner (3)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16490,7 +16490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 0
   WeaponType: 1
-  TimeBetweenSpawn: 2
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1778424144
 SphereCollider:
@@ -16619,7 +16619,7 @@ GameObject:
   - component: {fileID: 1811061235}
   m_Layer: 2
   m_Name: EnemySpawner (8)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16665,7 +16665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 1
   WeaponType: 0
-  TimeBetweenSpawn: 3
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1811061237
 SphereCollider:
@@ -17522,7 +17522,7 @@ GameObject:
   - component: {fileID: 1896885991}
   m_Layer: 2
   m_Name: EnemySpawner (4)
-  m_TagString: Untagged
+  m_TagString: EnemySpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17568,7 +17568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSpecifiedWeapon: 1
   WeaponType: 4
-  TimeBetweenSpawn: 6
+  TimeBetweenSpawn: 0
   IsEnabled: 1
 --- !u!135 &1896885993
 SphereCollider:
@@ -19917,7 +19917,7 @@ Prefab:
     - target: {fileID: 114942025108393674, guid: a4b53c80500958f4284028487e7011ba,
         type: 2}
       propertyPath: TimeBetweenSpawn
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4b53c80500958f4284028487e7011ba, type: 2}
