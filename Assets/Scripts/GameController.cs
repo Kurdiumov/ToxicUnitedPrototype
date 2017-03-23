@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,15 +8,10 @@ public class GameController : MonoBehaviour
 {
 
     public GameObject UnitArrayPool;
-
     public GameObject UnitPanelTemplate;
-
     public float TurnDuration;
-
     public PlayerController Player;
-
-    public  bool RoundRunning;
-
+    public bool RoundRunning;
     private float timeLeft;
 
     private List<int> _waves;
@@ -36,10 +32,10 @@ public class GameController : MonoBehaviour
         _unitsInBattlefield = new List<Unit>();
         // Load units:
         _waves = new List<int>();
-        _waves.Add(4);
-        _waves.Add(4);
-        _waves.Add(5);
-        _waves.Add(4);
+        _waves.Add(8);
+        _waves.Add(6);
+        _waves.Add(7);
+        _waves.Add(9);
 
         _currentWave = 0;
         SpawnUnits(_waves[0]);
@@ -107,6 +103,7 @@ public class GameController : MonoBehaviour
             enemy.SetActive(false);
         }
 
+        RemoveAllUnits();
         _startButton.SetActive(true);
         Player.SwitchControl(PlayerController.Mode.Strategic);
         RoundRunning = false;
@@ -129,10 +126,11 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < n; i++)
         {
             //addUnit("TestUnit");
-            var rename =  (GameObject)Instantiate(Resources.Load("TestUnit"));
-            
+            var rename = (GameObject)Instantiate(Resources.Load("TestUnit"));
+
+            rename.gameObject.GetComponent<Unit>().WeaponType = (Weapon.weaponType)Random.Range(0, 5);
             rename.transform.parent = Units.transform;
-            rename.transform.Translate(rename.transform.localPosition.x + 5*i, rename.transform.localPosition.y, rename.transform.localPosition.z );
+            rename.transform.Translate(rename.transform.localPosition.x + 5 * i, rename.transform.localPosition.y, rename.transform.localPosition.z);
         }
 
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
@@ -195,7 +193,34 @@ public class GameController : MonoBehaviour
     {
         _currentWave = _waves.Count + 1;
         Debug.Log("You win!!");
-       
+
     }
 
+
+    public void RemoveAllUnits()
+    {
+        Debug.Log("Remoing units...");
+        foreach (var unit in GameObject.FindGameObjectsWithTag("Unit"))
+        {
+            Destroy(unit.gameObject);
+        }
+        foreach (var unitImage in GameObject.FindGameObjectsWithTag("UnitImage"))
+        {
+            Destroy(unitImage.gameObject);
+        }
+
+        for (int i = 0; i < _availableUnits.Count; i++)
+        {
+            // Remove from array
+            _availableUnits.RemoveAt(i);
+            // and delete GameObject (unit image in panel)
+            Destroy(UnitArrayPool.transform.GetChild(i).gameObject);
+        }
+        _unitsInBattlefield.Clear();
+        _availableUnits.Clear();
+
+
+        // UnitArrayPool
+        // UnitPanelTemplate;
+    }
 }
