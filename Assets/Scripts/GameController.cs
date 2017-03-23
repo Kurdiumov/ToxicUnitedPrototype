@@ -32,10 +32,10 @@ public class GameController : MonoBehaviour
         _unitsInBattlefield = new List<Unit>();
         // Load units:
         _waves = new List<int>();
-        _waves.Add(8);
-        _waves.Add(6);
-        _waves.Add(7);
-        _waves.Add(9);
+        _waves.Add(4);
+        _waves.Add(3);
+        _waves.Add(4);
+        _waves.Add(4);
 
         _currentWave = 0;
         SpawnUnits(_waves[0]);
