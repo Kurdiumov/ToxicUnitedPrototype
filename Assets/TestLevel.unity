@@ -1802,7 +1802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SniperCamera: {fileID: 2080641203}
-  Ammo: 5
+  Ammo: 3
   Attack: 30
   TimeBetweenShoots: 3
   KnockbackAmount: 5

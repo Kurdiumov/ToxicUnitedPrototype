@@ -67,6 +67,9 @@ public class GameController : MonoBehaviour
         foreach (var spawn in GameObject.FindGameObjectsWithTag("EnemySpawner"))
             spawn.gameObject.GetComponent<EnemySpawner>().IsEnabled = false;
 
+       var sniper = GameObject.Find("Player").gameObject.GetComponent<SniperControl>();
+        sniper.Ammo += 3;
+        GameObject.Find("SniperSightCanvas").transform.GetChild(1).gameObject.GetComponent<Text>().text = sniper.Ammo.ToString();
         _timerText.enabled = true;
         if (_unitsInBattlefield.Count <= 0)
             return;
