@@ -94,8 +94,12 @@ public class GameController : MonoBehaviour
     public void EndRound()
     {
         foreach (var spawn in GameObject.FindGameObjectsWithTag("EnemySpawner"))
-            spawn.gameObject.GetComponent<EnemySpawner>().IsEnabled = true;
-        _timerText.enabled = false;
+        {
+            if(Random.Range(0, 3) != 2) //chanse 2/3
+                spawn.gameObject.GetComponent<EnemySpawner>().IsEnabled = true;
+        }
+
+    _timerText.enabled = false;
         foreach (var Unit in GameObject.FindGameObjectsWithTag("Unit"))
         {
             var unit = Unit.GetComponent<Unit>();
